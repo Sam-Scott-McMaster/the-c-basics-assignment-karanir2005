@@ -8,12 +8,12 @@ void convert_to_base(long num, int base) {
     
     
     if (num < 0) {
-        putchar('-');
+        printf("-");
         num = -num;
     }
     
     if (num >= base) {
         convert_to_base(num / base, base);
     }
-    putchar(digits[num % base]);
+    printf("%c", digits[num % base]);
 }
