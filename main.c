@@ -44,7 +44,7 @@ void parse_args(int argc, char *argv[], int *base, long *start, long *finish, in
             *range_mode = 1;
         } else {
             fprintf(stderr, "Usage: convert [-b BASE] [-r START FINISH]\n");
-            fprintf(stderr, "       1 < BASE < 37\n");
+            fprintf(stderr, "     1 < BASE < 37\n");
             fprintf(stderr, "       START and FINISH are long integers\n");
             
             exit(1);
