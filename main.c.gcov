@@ -11,98 +11,121 @@
         -:    7:#define MIN_BASE 2
         -:    8:#define MAX_BASE 36
         -:    9:
-        2:   10:void help_msg(){
-        2:   11:    printf("Developed by Rushil Karani.\n\n");
-        -:   12:
-        2:   13:    printf("Usage: convert [-b BASE] [-r START FINISH]\n");
-        2:   14:    printf("  The convert utility reads integers from user or a specified range\n");
-        2:   15:    printf("  and converts them to a new base (default base: 16). The result is printed.\n\n");
-        -:   16:    
-        2:   17:    printf("  -b BASE          Base for conversion: (default is 16, hexadecimal).\n");
-        2:   18:    printf("                   Valid base values: 2 to 36.\n");
-        2:   19:    printf("                   Digits 10-35 are denoted with letters A-Z.\n");
-        2:   20:    printf("  -r START FINISH  Convert all numbers in range [START, FINISH].\n");
-        2:   21:    printf("                   Otherwise, numbers will be read from user input one at a time.\n");
-        2:   22:    printf("                   Enter Ctrl+D to end.\n\n");
-        -:   23:    
-        2:   24:    printf("Enter only integer values to convert.\n");
-        2:   25:}
-        -:   26:
-       16:   27:void parse_args(int argc, char *argv[], int *base, long *start, long *finish, int *range_mode) {
-       16:   28:    *base = DEFAULT_BASE;
-       16:   29:    *range_mode = 0;
-        -:   30:
-       26:   31:    for (int i = 1; i < argc; i++) {
-        -:   32:
-       14:   33:        if (strcmp(argv[i], "-b") == 0 && i + 1 < argc) {
-        8:   34:            *base = atoi(argv[++i]);
-        8:   35:            if (*base < MIN_BASE || *base > MAX_BASE) {
-        2:   36:                fprintf(stderr, "Usage: convert [-b BASE] [-r START FINISH]\n");
-        2:   37:                fprintf(stderr, "       1 < BASE < 37\n");
-        2:   38:                fprintf(stderr, "       START and FINISH are long integers\n");
-        2:   39:                exit(1);
-        -:   40:            }
-        6:   41:        } else if (strcmp(argv[i], "-r") == 0 && i + 2 < argc) {
-        4:   42:            *start = atol(argv[++i]);
-        4:   43:            *finish = atol(argv[++i]);
-        4:   44:            *range_mode = 1;
-        -:   45:        } else {
-        2:   46:            fprintf(stderr, "Usage: convert [-b BASE] [-r START FINISH]\n");
-        2:   47:            fprintf(stderr, "       1 < BASE < 37\n");
-        2:   48:            fprintf(stderr, "       START and FINISH are long integers\n");
-        -:   49:            
-        2:   50:            exit(1);
-        -:   51:        }
-        -:   52:    }
-       12:   53:}
-        -:   54:
-        4:   55:void display_range(long start, long finish, int base) {
-       16:   56:    for (long i = start; i <= finish; i++) {       
-       12:   57:        convert_to_base(i, base);
-       12:   58:        printf("\n");
-        -:   59:    }
-        4:   60:}
-        -:   61:
-        8:   62:void read_input(int base) {
-        -:   63:    long number;
-        -:   64:               
-        8:   65:    int result=1;   
-        -:   66:    
-       40:   67:    while (result==1) {
-        -:   68:      
-       34:   69:        result = scanf("%ld", &number);
-       34:   70:        if (result==0){
-        2:   71:            fprintf(stderr, "Error: Non-long-int token encountered.\n");         
-        2:   72:            exit(1);
-        -:   73:        }
-       32:   74:        else if (result==1){
-       26:   75:            convert_to_base(number, base);
-       26:   76:            printf("\n");
-        -:   77:        }
-        -:   78:    }    
-        6:   79:}
-        -:   80:
-       18:   81:int main(int argc, char *argv[]) {
-        -:   82:
-       18:   83:    if (argc > 1 && strcmp(argv[1], "--help") == 0) {
-        2:   84:        help_msg();
-        2:   85:        return 0;
-        -:   86:    }
-        -:   87:
-        -:   88:    int base;
-       16:   89:    long start = 0, finish = 0;
-        -:   90:    int range_mode;
-        -:   91:
-       16:   92:    parse_args(argc, argv, &base, &start, &finish, &range_mode);
-        -:   93:
-       12:   94:    if (range_mode) {
-        4:   95:        display_range(start, finish, base);
-        -:   96:    } else {
-        8:   97:        read_input(base);
-        -:   98:    }
-        -:   99:
-       10:  100:    return 0;
-        -:  101:}
-        -:  102:
+        -:   10:/*
+        -:   11:Rushil Karani
+        -:   12:main file of the convert utility
+        -:   13:functions: reading input, read user input, and read range and call the recursive function.
+        -:   14:*/
+        -:   15:
+        2:   16:void help_msg(){
+        -:   17:    // print program info
+        2:   18:    printf("Developed by Rushil Karani.\n\n");
+        -:   19:
+        -:   20:    // print usage instructions
+        2:   21:    printf("Usage: convert [-b BASE] [-r START FINISH]\n");
+        2:   22:    printf("  The convert utility reads integers from user or a specified range\n");
+        2:   23:    printf("  and converts them to a new base (default base: 16). The result is printed.\n\n");
+        -:   24:    
+        -:   25:    // print base conversion info
+        2:   26:    printf("  -b BASE          Base for conversion: (default is 16, hexadecimal).\n");
+        2:   27:    printf("                   Valid base values: 2 to 36.\n");
+        2:   28:    printf("                   Digits 10-35 are denoted with letters A-Z.\n");
+        -:   29:    // print range info
+        2:   30:    printf("  -r START FINISH  Convert all numbers in range [START, FINISH].\n");
+        2:   31:    printf("                   Otherwise, numbers will be read from user input one at a time.\n");
+        2:   32:    printf("                   Enter Ctrl+D to end.\n\n");
+        -:   33:    
+        -:   34:    // general input info
+        2:   35:    printf("Enter only integer values to convert.\n");
+        2:   36:}
+        -:   37:
+       16:   38:void parse_args(int argc, char *argv[], int *base, long *start, long *finish, int *range_mode) {
+       16:   39:    *base = DEFAULT_BASE;  // set default base
+       16:   40:    *range_mode = 0;       // set default mode to single input
+        -:   41:
+        -:   42:    // loop through arguments
+       26:   43:    for (int i = 1; i < argc; i++) {
+        -:   44:
+        -:   45:        // handle base argument
+       14:   46:        if (strcmp(argv[i], "-b") == 0 && i + 1 < argc) {
+        8:   47:            *base = atoi(argv[++i]);  // set base
+        -:   48:            // check if base is valid
+        8:   49:            if (*base < MIN_BASE || *base > MAX_BASE) {
+        -:   50:                // print error message and exit
+        2:   51:                fprintf(stderr, "Usage: convert [-b BASE] [-r START FINISH]\n");
+        2:   52:                fprintf(stderr, "       1 < BASE < 37\n");
+        2:   53:                fprintf(stderr, "       START and FINISH are long integers\n");
+        2:   54:                exit(1);
+        -:   55:            }
+        -:   56:        } 
+        -:   57:        // handle range argument
+        6:   58:        else if (strcmp(argv[i], "-r") == 0 && i + 2 < argc) {
+        4:   59:            *start = atol(argv[++i]);  // set start
+        4:   60:            *finish = atol(argv[++i]); // set finish
+        4:   61:            *range_mode = 1;            // set range mode
+        -:   62:        } 
+        -:   63:        // invalid arguments
+        -:   64:        else {
+        -:   65:            // print error message and exit
+        2:   66:            fprintf(stderr, "Usage: convert [-b BASE] [-r START FINISH]\n");
+        2:   67:            fprintf(stderr, "       1 < BASE < 37\n");
+        2:   68:            fprintf(stderr, "       START and FINISH are long integers\n");
+        2:   69:            exit(1);
+        -:   70:        }
+        -:   71:    }
+       12:   72:}
+        -:   73:
+        4:   74:void display_range(long start, long finish, int base) {
+        -:   75:    // loop through range
+       16:   76:    for (long i = start; i <= finish; i++) {       
+       12:   77:        convert_to_base(i, base);  // convert number to base
+       12:   78:        printf("\n");
+        -:   79:    }
+        4:   80:}
+        -:   81:
+        8:   82:void read_input(int base) {
+        -:   83:    long number;  // variable for user input
+        -:   84:               
+        8:   85:    int result = 1;  // flag to check scanf result
+        -:   86:    
+        -:   87:    // loop for reading user input
+       40:   88:    while (result == 1) {
+        -:   89:      
+       34:   90:        result = scanf("%ld", &number);  // read number
+        -:   91:        // handle invalid input
+       34:   92:        if (result == 0) {
+        2:   93:            fprintf(stderr, "Error: Non-long-int token encountered.\n");         
+        2:   94:            exit(1);  // exit on error
+        -:   95:        }
+        -:   96:        // process valid input
+       32:   97:        else if (result == 1) {
+       26:   98:            convert_to_base(number, base);  // convert number to base
+       26:   99:            printf("\n");
+        -:  100:        }
+        -:  101:    }    
+        6:  102:}
         -:  103:
-        -:  104:
+       18:  104:int main(int argc, char *argv[]) {
+        -:  105:
+        -:  106:    // check for help argument
+       18:  107:    if (argc > 1 && strcmp(argv[1], "--help") == 0) {
+        2:  108:        help_msg();  // print help message
+        2:  109:        return 0;
+        -:  110:    }
+        -:  111:
+        -:  112:    int base;
+       16:  113:    long start = 0, finish = 0;
+        -:  114:    int range_mode;
+        -:  115:
+        -:  116:    // parse command line arguments
+       16:  117:    parse_args(argc, argv, &base, &start, &finish, &range_mode);
+        -:  118:
+        -:  119:    // process range or user input
+       12:  120:    if (range_mode) {
+        4:  121:        display_range(start, finish, base);
+        -:  122:    } else {
+        8:  123:        read_input(base);
+        -:  124:    }
+        -:  125:
+       10:  126:    return 0;
+        -:  127:}

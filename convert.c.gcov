@@ -7,17 +7,25 @@
         -:    3:#include <string.h>
         -:    4:#include "convert.h"
         -:    5:
-       96:    6:void convert_to_base(long num, int base) {
-       96:    7:    char digits[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        -:    8:    
-        -:    9:    
-       96:   10:    if (num < 0) {
-        2:   11:        printf("-");
-        2:   12:        num = -num;
-        -:   13:    }
-        -:   14:    
-       96:   15:    if (num >= base) {
-       58:   16:        convert_to_base(num / base, base);
-        -:   17:    }
-       96:   18:    printf("%c", digits[num % base]);
-       96:   19:}
+        -:    6:/*
+        -:    7:Rushil Karani
+        -:    8:recursive function that outputs one character at a time, 
+        -:    9:converting the decimal number to a specifies base.
+        -:   10:*/
+        -:   11:
+        -:   12:// function to convert number to a given base
+       96:   13:void convert_to_base(long num, int base) {
+       96:   14:    char digits[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";  // characters for digits
+        -:   15:
+        -:   16:    // handle negative numbers
+       96:   17:    if (num < 0) {
+        2:   18:        printf("-");  // print minus sign
+        2:   19:        num = -num;   // convert to positive
+        -:   20:    }
+        -:   21:
+        -:   22:    // recursively convert the number
+       96:   23:    if (num >= base) {
+       58:   24:        convert_to_base(num / base, base);  // call recursively for the quotient
+        -:   25:    }
+       96:   26:    printf("%c", digits[num % base]);  // print the remainder as the base digit
+       96:   27:}
