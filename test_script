@@ -83,7 +83,7 @@ test './convert -r 10 15' 'empty.txt' 'ex_out3.txt' 'empty.txt'
 test './convert -b 8 -r 17 9' 'empty.txt' 'empty.txt' 'empty.txt'
 test './convert --help' 'empty.txt' 'helpfile.txt' 'empty.txt'
 test './convert -b 77 -r -5 5' 'inp1.txt' 'empty.txt' 'usage.txt'
-#test './convert' 'inp9.txt' 'ex_out9.txt' 'err_out9.txt'
+test './convert' 'inp9.txt' 'ex_out9.txt' 'err_out9.txt'
 
 
 # clean up
