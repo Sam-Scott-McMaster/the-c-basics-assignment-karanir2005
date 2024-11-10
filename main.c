@@ -62,13 +62,14 @@ void display_range(long start, long finish, int base) {
 void read_input(int base) {
     long number;
                
-    int result=1;
-        
+    int result=1;   
+    
     while (result==1) {
+      
         result = scanf("%ld", &number);
         if (result==0){
-            fprintf(stderr, "Error: Non-long-int token encountered.");
-            printf("\n");
+            fprintf(stderr, "Error: Non-long-int token encountered.\n");         
+            exit(1);
         }
         else if (result==1){
             convert_to_base(number, base);

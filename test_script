@@ -49,6 +49,8 @@ test() {
     $COMMAND < $INP > test_out.txt 2> test_err.txt
     RET=$?
     if [[ $RET != $EX_RET ]]; then
+	echo "$RET"
+	echo "$EX_RET"
         echo "TC $tc Failed"
         echo "Returned $RET"
         echo "-----------"
