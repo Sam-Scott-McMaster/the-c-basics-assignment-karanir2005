@@ -1,0 +1,14 @@
+Developed by Rushil Karani.
+
+Usage: convert [-b BASE] [-r START FINISH]
+  The convert utility reads integers from user or a specified range
+  and converts them to a new base (default base: 16). The result is printed.
+
+  -b BASE          Base for conversion: (default is 16, hexadecimal).
+                   Valid base values: 2 to 36.
+                   Digits 10-35 are denoted with letters A-Z.
+  -r START FINISH  Convert all numbers in range [START, FINISH].
+                   Otherwise, numbers will be read from user input one at a time.
+                   Enter Ctrl+D to end.
+
+Enter only integer values to convert.

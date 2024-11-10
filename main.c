@@ -21,7 +21,7 @@ void help_msg(){
     printf("                   Otherwise, numbers will be read from user input one at a time.\n");
     printf("                   Enter Ctrl+D to end.\n\n");
     
-    printf("Enter only integer values to convert.\n\n");
+    printf("Enter only integer values to convert.\n");
 }
 
 void parse_args(int argc, char *argv[], int *base, long *start, long *finish, int *range_mode) {

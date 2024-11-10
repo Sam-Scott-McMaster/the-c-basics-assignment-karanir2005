@@ -1,0 +1,23 @@
+        -:    0:Source:convert.c
+        -:    0:Graph:convert-convert.gcno
+        -:    0:Data:convert-convert.gcda
+        -:    0:Runs:18
+        -:    1:#include <stdio.h>
+        -:    2:#include <stdlib.h>
+        -:    3:#include <string.h>
+        -:    4:#include "convert.h"
+        -:    5:
+       96:    6:void convert_to_base(long num, int base) {
+       96:    7:    char digits[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        -:    8:    
+        -:    9:    
+       96:   10:    if (num < 0) {
+        2:   11:        printf("-");
+        2:   12:        num = -num;
+        -:   13:    }
+        -:   14:    
+       96:   15:    if (num >= base) {
+       58:   16:        convert_to_base(num / base, base);
+        -:   17:    }
+       96:   18:    printf("%c", digits[num % base]);
+       96:   19:}
